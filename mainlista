@@ -1,0 +1,93 @@
+public class ListaEnlazada {
+    
+    private Medicamento lista;
+    
+    public ListaEnlazada() {
+         this.lista = null;
+    
+    }
+  
+     public void agregarMedicamento(int serie, String nombre, String marca, String reactivo, int cantidad) {
+         
+    Medicamento nuevo = new Medicamento(serie, nombre, marca, reactivo, cantidad, null);
+    
+        if (lista == null) {
+            lista = nuevo;
+            JOptionPane.showMessageDialog(null, "Primer medicamento");
+        } else {
+            Medicamento aux = lista;
+            while (aux.getAptSiguiente() != null) {
+                aux = aux.getAptSiguiente();
+            }
+            aux.setAptSiguiente(nuevo);
+            JOptionPane.showMessageDialog(null, "Medicamento agregado");
+        }  
+    }
+
+    public String recorrerLista() {
+        StringBuilder result = new StringBuilder();
+        Medicamento aux = lista;
+        
+        if (aux != null) {
+            while (aux != null) {
+                result.append("Serie: ").append(aux.getSerie())
+                      .append(", Nombre: ").append(aux.getNombre())
+                      .append(", Marca: ").append(aux.getMarca())
+                      .append(", Reactivo: ").append(aux.getReactivo())
+                      .append(", Cantidad: ").append(aux.getCantidad())
+                      .append("\n");
+                aux = aux.getAptSiguiente();
+            }
+        } else {
+            result.append("Lista vacía");
+        }
+        return result.toString();
+    }
+    
+
+    
+public Medicamento BuscarMedicamento(String nombre, String marca, String reactivo) {
+    
+      String buscar = JOptionPane.showInputDialog("Escriba nombre, marca o reactivo de medicamento");
+   
+
+    if (lista != null) {
+        Medicamento aux = lista;
+
+        while (aux != null) {
+            if (aux.getNombre().equals(buscar) || aux.getMarca().equals(buscar) || aux.getReactivo().equals(buscar)) {
+          
+            JOptionPane.showMessageDialog(null, "Medicamento encontrado:\nSerie: " + aux.getSerie() + "\nNombre: " + aux.getNombre() + "\nMarca: " + aux.getMarca() + "\nReactivo: " + aux.getReactivo());
+                return aux;
+            }
+            aux = aux.getAptSiguiente();
+        }
+    }
+
+    return null; 
+}
+
+  public void Modificar(int serie, String nuevoNombre, String nuevaMarca, String nuevoReactivo, int nuevaCantidad) {
+    Medicamento aux = lista;
+
+    while (aux != null) {
+        if (aux.getSerie() == serie) {
+            
+            aux.setNombre(nuevoNombre);
+            aux.setMarca(nuevaMarca);
+            aux.setReactivo(nuevoReactivo);
+            aux.setCantidad(nuevaCantidad);
+
+       
+            JOptionPane.showMessageDialog(null, "Medicamento modificado exitosamente");
+
+            return; 
+        }
+        aux = aux.getAptSiguiente();
+    }
+
+ 
+    JOptionPane.showMessageDialog(null, "Medicamento no encontrado");
+}
+
+}
