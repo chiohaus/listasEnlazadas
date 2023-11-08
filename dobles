@@ -1,0 +1,38 @@
+public void eliminarMedicamento(String nombre) {
+    NodoDoble aux = ini;
+
+    while (aux != null) {
+        Medicamento medicamento = aux.getMedicamento();
+
+        if (medicamento.getNombre().equals(nombre)) {
+            // Nodo a eliminar encontrado
+            NodoDoble nodoAnterior = aux.anterior;
+            NodoDoble nodoSiguiente = aux.siguiente;
+
+            if (nodoAnterior != null) {
+                nodoAnterior.siguiente = nodoSiguiente;
+            } else {
+                // Estamos eliminando el primer nodo, actualizamos ini
+                ini = nodoSiguiente;
+            }
+
+            if (nodoSiguiente != null) {
+                nodoSiguiente.anterior = nodoAnterior;
+            } else {
+                // Estamos eliminando el último nodo, actualizamos fin
+                fin = nodoAnterior;
+            }
+
+            // Eliminamos la referencia al nodo eliminado
+            aux.anterior = null;
+            aux.siguiente = null;
+
+            JOptionPane.showMessageDialog(null, "Medicamento eliminado exitosamente");
+            return;
+        }
+
+        aux = aux.siguiente;
+    }
+
+    JOptionPane.showMessageDialog(null, "Medicamento no encontrado");
+}
